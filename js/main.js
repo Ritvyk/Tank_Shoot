@@ -1,5 +1,5 @@
 //date : 18-feb 2020
-var score=0;
+var score = 0;
 function seeHit() {
     var targets = document.querySelectorAll(".target");
     var bullets = document.querySelectorAll(".bullet");
@@ -7,11 +7,11 @@ function seeHit() {
         var tempBulletPos = bullets[i].getBoundingClientRect();
         for (var j = 0; j < targets.length; j++) {
             var tempTargetPos = targets[j].getBoundingClientRect();
-            if ((tempBulletPos.x > tempTargetPos.x - 5 && tempBulletPos.x < tempTargetPos.x + 15)&&(tempBulletPos.y>tempTargetPos.y-5 && tempBulletPos.y<tempTargetPos.y+15)) {
+            if ((tempBulletPos.x > tempTargetPos.x - 5 && tempBulletPos.x < tempTargetPos.x + 15) && (tempBulletPos.y > tempTargetPos.y - 5 && tempBulletPos.y < tempTargetPos.y + 15)) {
                 document.getElementById("main-window").removeChild(targets[j]);
                 document.getElementById("game-window").removeChild(bullets[i]);
-                score+=5;
-                document.getElementById("score").innerText=score;
+                score += 5;
+                document.getElementById("score").innerText = score;
             }
         }
     }
@@ -36,7 +36,7 @@ class Player {
         var player = document.getElementById("player-model");
         var GW = UI.getWindowHW();
         var playerPos = UIControl.playerCurrentPosition();
-        console.log(playerPos);
+        // console.log(playerPos);
 
         if (playerPos.x + 10 < GW.width - 20) {
             player.style.left = (playerPos.x + 15) + "px";
@@ -46,10 +46,10 @@ class Player {
         var player = document.getElementById("player-model");
         var GW = UI.getWindowHW();
         var playerPos = UIControl.playerCurrentPosition();
-        console.log(playerPos);
+        // console.log(playerPos);
 
         if (playerPos.x > 10) {
-            player.style.left = (playerPos.x - 30) + "px";
+            player.style.left = (playerPos.x - 35) + "px";
         }
 
     }
@@ -89,7 +89,10 @@ class UIControl {
                 target.style.top = down + "px";
                 if (down + 30 > GW.height) {
                     document.getElementById("main-window").removeChild(target);
-                    alert("Game Over !");
+                    var notification=document.getElementById("notification");
+                    notification.innerText="Game Over!";
+                    notification.style.display="block";
+                    alert("Game Over!");
                     window.location.reload();
                 }
                 down++;
@@ -103,7 +106,7 @@ class UIControl {
         var GW = UI.getWindowHW();
         // console.log(GW);
         var up = 5;
-        
+
 
         // console.log(bullet.getBoundingClientRect()); 
         // console.log();
@@ -155,8 +158,8 @@ class Bullet {
         var playerPos = UIControl.playerCurrentPosition();
         // console.log(playerPos);
         var obj = {
-            "x": playerPos.x+8,
-            "y": playerPos.y-8
+            "x": playerPos.x + 8,
+            "y": playerPos.y - 8
         }
         return obj;
     }
@@ -192,31 +195,37 @@ document.body.onkeypress = function (e) {
     }
     else if (e.keyCode == 100) {
         Player.moveLeft();
-        console.log("left")
+        // console.log("left")
     }
     else if (e.keyCode == 97) {
         Player.moveRight();
-        console.log("right")
+        // console.log("right")
     }
 }
-document.getElementById("remote").addEventListener("click",function(e){
-    if(e.target.classList.contains("action"))
-    {
+document.getElementById("remote").addEventListener("click", function (e) {
+    if (e.target.classList.contains("action")) {
         if (e.target.classList.contains("moveleft")) {
-           
+
             Player.moveRight();
-            console.log("left");
-            
+            // console.log("left");
+
         }
         else if (e.target.classList.contains("shoot")) {
-            
+
             UIControl.shootBullet();
         }
         else if (e.target.classList.contains("moveright")) {
-           
+
             Player.moveLeft();
-            console.log("right")
+            // console.log("right")
+        }
+        else if (e.target.classList.contains("startgame")) {
+            document.getElementById("notification").style.display = "none";
+            startGame();
+        }
+        else if (e.target.classList.contains("reload")) {
+            window.location.reload();
         }
     }
 })
-startGame();
+// startGame();

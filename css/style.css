@@ -10,6 +10,7 @@ body{
 #notification{
     position: absolute;
     top:160px;
+    z-index: 100;
     color:beige;
     text-shadow: 2px 2px 1px rgb(97, 97, 97);
     width: 100%;
@@ -29,12 +30,14 @@ body{
     background-color: beige;
     padding:3px;
     /* height: 540px; */
+    height:100vh;
 }
 .sub-wrapper{
     width:310px;
     background-color: rgb(31, 30, 30);
     padding: 10px;
     position: relative;
+    height:100%;
 }
 .window-container{
     position: relative;
@@ -83,10 +86,13 @@ border:1px solid black;
 }
 .c-btn{
     border-radius: 50%;
-    width: 20px;
+    width: 30px;
     background-color: cadetblue;
-    padding: 13px;
-    box-shadow: 2px 2px 2px 2px grey;
+    height:30px;
+    text-align: center;
+    color:white;
+    font-weight: 1.5;
+    box-shadow: 2px 2px 2px 2px black;
     cursor: pointer;
 }
 
