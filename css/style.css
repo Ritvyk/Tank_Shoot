@@ -29,8 +29,8 @@ body{
 .wrapper{
     background-color: beige;
     padding:3px;
-    height: 540px;
-    /* height:; */
+    /* height: 540px; */
+    height:100vh;
 }
 .sub-wrapper{
     width:310px;
