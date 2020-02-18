@@ -26,6 +26,7 @@ body{
 .font-sm{
     font-size:12px;
 }
+
 .wrapper{
     background-color: beige;
     padding:3px;
@@ -101,4 +102,10 @@ border:1px solid black;
     background-repeat: no-repeat;
     background-size: cover;
     height: 100px;
+}
+@media screen and (max-width:400px)
+{
+    .sub-wrapper{
+        width:100%;
+    }
 }
