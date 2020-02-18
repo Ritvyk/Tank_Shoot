@@ -36,18 +36,20 @@ class Player {
         var player = document.getElementById("player-model");
         var GW = UI.getWindowHW();
         var playerPos = UIControl.playerCurrentPosition();
+        console.log(playerPos);
 
         if (playerPos.x + 10 < GW.width - 20) {
-            player.style.left = (playerPos.x + 12) + "px";
+            player.style.left = (playerPos.x + 15) + "px";
         }
     }
     static moveRight() {
         var player = document.getElementById("player-model");
         var GW = UI.getWindowHW();
         var playerPos = UIControl.playerCurrentPosition();
+        console.log(playerPos);
 
         if (playerPos.x > 10) {
-            player.style.left = (playerPos.x - 50) + "px";
+            player.style.left = (playerPos.x - 30) + "px";
         }
 
     }
@@ -153,7 +155,7 @@ class Bullet {
         var playerPos = UIControl.playerCurrentPosition();
         // console.log(playerPos);
         var obj = {
-            "x": playerPos.x + 8,
+            "x": playerPos.x+8,
             "y": playerPos.y-8
         }
         return obj;
@@ -190,9 +192,11 @@ document.body.onkeypress = function (e) {
     }
     else if (e.keyCode == 100) {
         Player.moveLeft();
+        console.log("left")
     }
     else if (e.keyCode == 97) {
         Player.moveRight();
+        console.log("right")
     }
 }
 document.getElementById("remote").addEventListener("click",function(e){
@@ -201,14 +205,18 @@ document.getElementById("remote").addEventListener("click",function(e){
         if (e.target.classList.contains("moveleft")) {
            
             Player.moveRight();
+            console.log("left");
+            
         }
         else if (e.target.classList.contains("shoot")) {
             
             UIControl.shootBullet();
         }
         else if (e.target.classList.contains("moveright")) {
+           
             Player.moveLeft();
+            console.log("right")
         }
     }
 })
-// startGame();
+startGame();
