@@ -1,0 +1,98 @@
+/* date : 18-02-2020 */
+*{
+    margin:0px;
+    padding:0px;
+}
+body{
+    font-family: 'Press Start 2P', cursive;
+    margin:0px;
+}
+#notification{
+    position: absolute;
+    top:160px;
+    color:beige;
+    text-shadow: 2px 2px 1px rgb(97, 97, 97);
+    width: 100%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+.font-bg{
+    font-size:20px;
+}
+.font-xm{
+    font-size:8px;
+}
+.font-sm{
+    font-size:12px;
+}
+.wrapper{
+    background-color: beige;
+    padding:3px;
+    /* height: 540px; */
+}
+.sub-wrapper{
+    width:290px;
+    background-color: rgb(31, 30, 30);
+    padding: 10px;
+    position: relative;
+}
+.window-container{
+    position: relative;
+}
+.game-window{
+    border:dotted 1px black;
+    background-color: rgb(175, 140, 71);
+}
+.sky-container{
+border:1px solid black;
+    height: 200px;
+}
+.player-container{
+    border:solid green;
+    position:relative;
+}
+#player-model{
+    position: absolute;
+    bottom: 0px;
+}
+.target{
+    background-image: url("../character/meteor.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 20px;
+    padding: 9px;
+    position: absolute;
+    top: 0px;
+    z-index: 2;
+    margin-top: 4px;
+    margin-left: 4px;
+    transform: rotate(45deg);
+}
+
+#jump-btn{
+    border-radius: 50%;
+    cursor: pointer;
+}
+.bullet{
+    border:solid 0.5px;
+    border-radius: 50%;
+    background-color: rgb(255, 51, 0);
+    position: absolute;
+    padding: 3px;
+    width:5px
+}
+.c-btn{
+    border-radius: 50%;
+    width: 20px;
+    background-color: cadetblue;
+    padding: 13px;
+    box-shadow: 2px 2px 2px 2px grey;
+    cursor: pointer;
+}
+
+.sticker{
+    background-image: url("../character/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100px;
+}
