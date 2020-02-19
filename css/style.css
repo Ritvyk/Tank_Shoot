@@ -17,6 +17,12 @@ body{
     left:50%;
     transform: translate(-50%,-50%);
 }
+.margin-bg{
+    margin-top:80px;
+}
+.font-xbg{
+    font-size: 25px;
+}
 .font-bg{
     font-size:20px;
 }
@@ -35,6 +41,7 @@ body{
 }
 .sub-wrapper{
     width:310px;
+    box-shadow: 4px 6px 32px 10px black;
     background-color: rgb(31, 30, 30);
     padding: 10px;
     position: relative;
@@ -46,6 +53,7 @@ body{
 .game-window{
     border:dotted 1px black;
     background-color: rgb(175, 140, 71);
+    height:200px;
 }
 .sky-container{
 border:1px solid black;
@@ -107,5 +115,33 @@ border:1px solid black;
 {
     .sub-wrapper{
         width:100%;
+    }
+}
+#sticker{
+    animation: mymove 5s infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    /* animati */
+}
+@keyframes mymove{
+    0% {
+        color:rgb(190, 33, 33);
+        text-shadow: 10px 10px 20px rgb(190, 33, 33);
+    }
+    25% {
+        color:orangered;
+        text-shadow: 10px 10px 20px orangered;
+    }
+    50% {
+        color:rgb(255, 208, 0);
+        text-shadow: 10px 10px 20px rgb(255, 208, 0);
+    }
+    75%{
+        color:rgb(255, 230, 0);
+        text-shadow: 10px 10px 20px rgb(255, 230, 0);
+    }
+    100%{
+        color:white;
+        text-shadow: 10px 10px 20px white;
     }
 }

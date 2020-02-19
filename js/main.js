@@ -1,5 +1,10 @@
 //date : 18-feb 2020
 var score = 0;
+function getStoredScore()
+{
+    var score=JSON.parse(localStorage.getItem("upshoot_score"));
+    return score.upshoot_score;
+}
 function seeHit() {
     var targets = document.querySelectorAll(".target");
     var bullets = document.querySelectorAll(".bullet");
@@ -17,6 +22,23 @@ function seeHit() {
     }
 
 }
+function checkNewHighScore()
+{
+    if(localStorage.getItem("upshoot_score")!=null)
+    {
+        var prevHScore=getStoredScore();
+        if(prevHScore<score)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    else{
+        return false;
+    }
+}
 // seeHit();
 function getID() {
     return (1 + Math.random() * 99271);
@@ -30,6 +52,29 @@ class UI {
         }
         return object;
     }
+    static setUI()
+    {
+        if(localStorage.getItem("upshoot_score")!=null)
+        {
+            var score=JSON.parse(localStorage.getItem("upshoot_score"));
+            document.getElementById("Hscore").innerText=score.upshoot_score;
+        }
+    }
+    static SOUND(toPlay)
+    {
+        if(toPlay==="back")
+        {
+            var sound=document.getElementById("back_music");
+            sound.volume=0.50;
+            sound.play();
+        }
+    }
+}
+function shootSound()
+{
+    var sound=document.getElementById("shoot_music");
+            sound.volume=0.75;
+            sound.play();
 }
 class Player {
     static moveLeft() {
@@ -72,35 +117,44 @@ class Target {
 }
 class UIControl {
 
-
     fallDown(object) {
         var target = object;
         var down = 1;
+        var gameOver=false;
         var GW = UI.getWindowHW();
+        var dropInterval= setInterval(fall, 100);
         function fall() {
-            //checking if the bullet has struck to a target
-            // var bulletPos=Bullet.getBulletCurrentPostion();
-            // var targetPos=target.getBoundingClientRect();
-            // if(bulletPos.x===targetPos.x)
-            // {
-            //     console.log("HIT");
-            // }
+            if(gameOver)
+            {
+                clearInterval(dropInterval);
+            }
             if (document.getElementById(target.id)) {
                 target.style.top = down + "px";
                 if (down + 30 > GW.height) {
                     document.getElementById("main-window").removeChild(target);
-                    var notification=document.getElementById("notification");
-                    notification.innerText="Game Over!";
-                    notification.style.display="block";
-                    alert("Game Over!");
-                    window.location.reload();
+                    var notification = document.getElementById("notification");
+                    notification.innerText = "Game Over!";
+                    notification.style.display = "block";
+                    var ifHighScored=checkNewHighScore();
+                    if(ifHighScored)
+                    {
+                        var noti=document.createElement("p");
+                        noti.innerText="New High Score!";
+                        noti.className="text-center font-xm p-0 m-0 mt-1 d-block";
+                        notification.appendChild(noti);
+                    }
+                    stopGame("stop");
+                    gameOver=true;
+                    clearInterval(dropInterval);
+                    // window.location.reload();
                 }
                 down++;
             }
         }
-        setInterval(fall, 100);
+       
     }
     fireBullet(object) {
+
         var bullet = object;
         // console.log(bullet.id);
         var GW = UI.getWindowHW();
@@ -110,7 +164,9 @@ class UIControl {
 
         // console.log(bullet.getBoundingClientRect()); 
         // console.log();
+        var fireInterval = setInterval(fire, 1);
         var bpos = Bullet.getBulletCurrentPostion(bullet);
+        
         function fire() {
             seeHit();
             //checking if the bullet currently exists in the game window
@@ -119,11 +175,13 @@ class UIControl {
                 up += 2;
                 if (up + 50 > GW.height) {
                     document.getElementById("game-window").removeChild(bullet);
+                    //clearing the interval when bullet has reached above the game window...
+                    clearInterval(fireInterval);
                 }
             }
             //    console.log(up);
         }
-        setInterval(fire, 1);
+
 
     }
     static playerCurrentPosition() {
@@ -183,14 +241,40 @@ class Bullet {
         return bullet;
     }
 }
-
-function startGame() {
+//window vars
+var gameFlag=true;
+function startGame(action=false) {
     //droping a random target after 1.5 sec...
-    // UIControl.dropTarget();
-    setInterval(UIControl.dropTarget, 1500);
+        if(gameFlag)
+        {
+            var running=setInterval(UIControl.dropTarget, 2500);
+        }
+}
+function stopGame(action)
+{
+    if(action==="stop")
+    {
+        var finalScore=score;
+        var obj={
+            "upshoot_score":finalScore
+        }
+        if(localStorage.getItem("upshoot_score")!=null)
+        {
+            var hscore=JSON.parse(localStorage.getItem("upshoot_score"));
+            if(hscore.upshoot_score<finalScore)
+            {
+                localStorage.setItem("upshoot_score",JSON.stringify(obj));
+            }
+        }
+        else{
+            localStorage.setItem("upshoot_score",JSON.stringify(obj));
+        }
+        document.getElementById("game-window").innerText="";
+    }
 }
 document.body.onkeypress = function (e) {
     if (e.keyCode == 32) {
+        shootSound();
         UIControl.shootBullet();
     }
     else if (e.keyCode == 100) {
@@ -211,7 +295,7 @@ document.getElementById("remote").addEventListener("click", function (e) {
 
         }
         else if (e.target.classList.contains("shoot")) {
-
+            shootSound();
             UIControl.shootBullet();
         }
         else if (e.target.classList.contains("moveright")) {
@@ -221,6 +305,7 @@ document.getElementById("remote").addEventListener("click", function (e) {
         }
         else if (e.target.classList.contains("startgame")) {
             document.getElementById("notification").style.display = "none";
+            UI.SOUND("back");
             startGame();
         }
         else if (e.target.classList.contains("reload")) {
@@ -228,4 +313,4 @@ document.getElementById("remote").addEventListener("click", function (e) {
         }
     }
 })
-// startGame();
+UI.setUI();
